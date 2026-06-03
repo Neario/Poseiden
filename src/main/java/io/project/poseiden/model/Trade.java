@@ -2,10 +2,12 @@ package io.project.poseiden.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.sql.Timestamp;
 
 @Data
+@DynamicUpdate
 @Entity
 @Table(name = "trade")
 public class Trade {

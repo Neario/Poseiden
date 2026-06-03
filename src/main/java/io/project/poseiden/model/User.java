@@ -3,8 +3,10 @@ package io.project.poseiden.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Data
+@DynamicUpdate
 @Entity
 @Table(name = "users")
 public class User {
