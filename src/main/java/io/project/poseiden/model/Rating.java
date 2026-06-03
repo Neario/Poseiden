@@ -10,4 +10,8 @@ public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String moodysRating;
+    private String sandPRating;
+    private String fitchRating;
+    private Integer orderNumber;
 }
