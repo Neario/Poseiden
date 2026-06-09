@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @DynamicUpdate
 @Entity
 @Table(name = "curvepoint")
-public class CurvePoint {
+public class CurvePoint implements CrudModel<CurvePoint> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -19,4 +19,8 @@ public class CurvePoint {
     private Double term;
     private Double value;
     private Timestamp creationDate;
+
+    public CurvePoint update(CurvePoint curvePoint) {
+        return this;
+    }
 }

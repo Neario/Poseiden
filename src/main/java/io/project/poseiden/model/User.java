@@ -9,7 +9,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicUpdate
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements CrudModel<User>{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -21,4 +21,11 @@ public class User {
     private String fullname;
     @NotBlank(message = "Role is mandatory")
     private String role;
+
+    public  User update(User user){
+        setUsername(user.username);
+        setPassword(user.password);
+
+        return this;
+    }
 }

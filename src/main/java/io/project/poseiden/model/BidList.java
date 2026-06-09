@@ -2,15 +2,17 @@ package io.project.poseiden.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.sql.Timestamp;
 
 @Data
+@Accessors(chain = true)
 @DynamicUpdate
 @Entity
 @Table(name = "bidlist")
-public class BidList {
+public class BidList implements CrudModel<BidList> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -35,4 +37,15 @@ public class BidList {
     private String dealType;
     private String sourceListId;
     private String side;
+
+
+    public BidList update(BidList bidList) {
+        setAccount(bidList.getAccount());
+        setType(bidList.getType());
+        setBid(bidList.getBid());
+        setAsk(bidList.getAsk());
+
+        return this;
+    }
+
 }

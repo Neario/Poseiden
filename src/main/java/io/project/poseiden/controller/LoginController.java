@@ -1,6 +1,8 @@
 package io.project.poseiden.controller;
 
-import io.project.poseiden.repository.UserRepository;
+import io.project.poseiden.model.User;
+import io.project.poseiden.service.CrudService;
+import io.project.poseiden.service.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 @AllArgsConstructor
 public class LoginController {
 
-    private final UserRepository userRepository;
+    private final CrudService<User> userService;
 
     @GetMapping("login")
     public ModelAndView login() {
@@ -24,7 +26,7 @@ public class LoginController {
     @GetMapping("secure/article-details")
     public ModelAndView getAllUserArticles() {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("users", userRepository.findAll());
+        mav.addObject("users", userService.findAll());
         mav.setViewName("user/list");
         return mav;
     }

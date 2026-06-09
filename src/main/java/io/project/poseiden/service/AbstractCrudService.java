@@ -1,0 +1,46 @@
+package io.project.poseiden.service;
+
+
+import io.project.poseiden.model.CrudModel;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+public class AbstractCrudService<MODEL extends CrudModel> implements CrudService<MODEL> {
+
+    protected final JpaRepository<MODEL, Long> repository;
+
+    protected AbstractCrudService(JpaRepository<MODEL, Long> repository) {
+        this.repository = repository;
+    }
+
+    public Optional<MODEL> findById(Long id) {
+        return repository.findById(id);
+    }
+
+    public MODEL getById(Long id) {
+        return repository.findById(id).orElseThrow();
+    }
+
+    public List<MODEL> findAll() {
+        return repository.findAll();
+    }
+
+    public void save(MODEL model) {
+        repository.save(model);
+    }
+
+    public void update(MODEL model) {
+        final MODEL modelUpdated = findById(model.getId())
+                .map(savedModel -> (MODEL) savedModel.update(model))
+                .orElseThrow();
+
+        repository.save(modelUpdated);
+    }
+
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+}
