@@ -1,4 +1,7 @@
 package io.project.poseiden.service.interfaces;
 
-public interface RuleNameService {
+import io.project.poseiden.model.RuleName;
+import io.project.poseiden.service.CrudService;
+
+public interface RuleNameService extends CrudService<RuleName> {
 }

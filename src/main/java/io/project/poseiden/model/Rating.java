@@ -8,7 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicUpdate
 @Entity
 @Table(name = "rating")
-public class Rating {
+public class Rating implements CrudModel<Rating> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

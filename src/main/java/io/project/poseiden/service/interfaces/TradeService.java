@@ -1,4 +1,7 @@
 package io.project.poseiden.service.interfaces;
 
-public interface TradeService {
+import io.project.poseiden.model.Trade;
+import io.project.poseiden.service.CrudService;
+
+public interface TradeService extends CrudService<Trade> {
 }

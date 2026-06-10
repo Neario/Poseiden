@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @DynamicUpdate
 @Entity
 @Table(name = "trade")
-public class Trade {
+public class Trade implements CrudModel<Trade> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

@@ -1,4 +1,7 @@
 package io.project.poseiden.service.interfaces;
 
-public interface CurvePointService {
+import io.project.poseiden.model.CurvePoint;
+import io.project.poseiden.service.CrudService;
+
+public interface CurvePointService extends CrudService<CurvePoint> {
 }

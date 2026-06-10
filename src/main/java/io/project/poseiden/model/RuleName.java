@@ -8,7 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicUpdate
 @Entity
 @Table(name = "rulename")
-public class RuleName {
+public class RuleName implements CrudModel<RuleName> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
