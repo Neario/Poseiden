@@ -18,4 +18,8 @@ public class RuleName {
     private String template;
     private String sqlStr;
     private String sqlPart;
+
+    public RuleName update(RuleName ruleName){
+        return this;
+    }
 }

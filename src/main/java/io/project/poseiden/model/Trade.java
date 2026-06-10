@@ -34,4 +34,8 @@ public class Trade {
     private String dealType;
     private String sourceListId;
     private String side;
+
+    public Trade update(Trade trade){
+        return this;
+    }
 }

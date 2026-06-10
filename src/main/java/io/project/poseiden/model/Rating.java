@@ -16,4 +16,8 @@ public class Rating {
     private String sandPRating;
     private String fitchRating;
     private Integer orderNumber;
+
+    public Rating update(Rating rating) {
+        return this;
+    }
 }
