@@ -18,9 +18,9 @@ public class BidList implements CrudModel<BidList> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank
+    @NotBlank(message = "Account is mandatory")
     private String account;
-    @NotBlank
+    @NotBlank(message = "Type is mandatory")
     private String type;
     @NotNull
     private Double bidQuantity;
