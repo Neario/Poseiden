@@ -14,13 +14,16 @@ public class CurvePoint implements CrudModel<CurvePoint> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Integer curveId;
     private Timestamp asOfDate;
     private Double term;
     private Double value;
     private Timestamp creationDate;
 
     public CurvePoint update(CurvePoint curvePoint) {
+        setAsOfDate(curvePoint.getAsOfDate());
+        setTerm(curvePoint.getTerm());
+        setValue(curvePoint.getValue());
+        setCreationDate(curvePoint.getCreationDate());
         return this;
     }
 }

@@ -1,17 +1,9 @@
 package io.project.poseiden.exception;
 
-import org.springframework.http.HttpStatus;
-
 public class AbstractDomainException extends RuntimeException {
 
-    protected HttpStatus httpStatus;
-
-    protected AbstractDomainException(String message, HttpStatus httpStatus) {
+    protected AbstractDomainException(String message) {
         super(message);
-        this.httpStatus = httpStatus;
     }
 
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
 }

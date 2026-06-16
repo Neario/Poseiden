@@ -25,7 +25,8 @@ public class User implements CrudModel<User>{
     public  User update(User user){
         setUsername(user.username);
         setPassword(user.password);
-
+        setFullname(user.fullname);
+        setRole(user.role);
         return this;
     }
 }

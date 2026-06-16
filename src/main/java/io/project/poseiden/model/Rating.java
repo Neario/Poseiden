@@ -18,6 +18,10 @@ public class Rating implements CrudModel<Rating> {
     private Integer orderNumber;
 
     public Rating update(Rating rating) {
+        setMoodysRating(rating.getMoodysRating());
+        setSandPRating(rating.getSandPRating());
+        setFitchRating(rating.getFitchRating());
+        setOrderNumber(rating.getOrderNumber());
         return this;
     }
 }

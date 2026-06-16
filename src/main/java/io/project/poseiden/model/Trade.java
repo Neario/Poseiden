@@ -36,6 +36,26 @@ public class Trade implements CrudModel<Trade> {
     private String side;
 
     public Trade update(Trade trade){
+        setAccount(trade.getAccount());
+        setType(trade.getType());
+        setBuyQuantity(trade.getBuyQuantity());
+        setSellQuantity(trade.getSellQuantity());
+        setBuyPrice(trade.getBuyPrice());
+        setSellPrice(trade.getSellPrice());
+        setBenchmark(trade.getBenchmark());
+        setTradeDate(trade.getTradeDate());
+        setSecurity(trade.getSecurity());
+        setStatus(trade.getStatus());
+        setTrader(trade.getTrader());
+        setBook(trade.getBook());
+        setCreationName(trade.getCreationName());
+        setCreationDate(trade.getCreationDate());
+        setRevisionName(trade.getRevisionName());
+        setRevisionDate(trade.getRevisionDate());
+        setDealName(trade.getDealName());
+        setDealType(trade.getDealType());
+        setSourceListId(trade.getSourceListId());
+        setSide(trade.getSide());
         return this;
     }
 }

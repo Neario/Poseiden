@@ -20,6 +20,12 @@ public class RuleName implements CrudModel<RuleName> {
     private String sqlPart;
 
     public RuleName update(RuleName ruleName){
+        setName(ruleName.getName());
+        setDescription(ruleName.getDescription());
+        setJson(ruleName.getJson());
+        setTemplate(ruleName.getTemplate());
+        setSqlStr(ruleName.getSqlStr());
+        setSqlPart(ruleName.getSqlPart());
         return this;
     }
 }
