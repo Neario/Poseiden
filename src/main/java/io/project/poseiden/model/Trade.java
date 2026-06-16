@@ -2,11 +2,13 @@ package io.project.poseiden.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.sql.Timestamp;
 
 @Data
+@Accessors(chain=true)
 @DynamicUpdate
 @Entity
 @Table(name = "trade")

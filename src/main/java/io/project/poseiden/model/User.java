@@ -3,9 +3,11 @@ package io.project.poseiden.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Data
+@Accessors(chain=true)
 @DynamicUpdate
 @Entity
 @Table(name = "users")
