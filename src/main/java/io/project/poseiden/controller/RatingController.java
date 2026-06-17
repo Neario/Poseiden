@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class RatingController {
@@ -35,9 +37,14 @@ public class RatingController {
         if (result.hasErrors()) {
             return "rating/add";
         }
-        ratingService.save(rating);
-        model.addAttribute("ratings", ratingService.findAll());
-        return "rating/list";
+        try {
+            ratingService.save(rating);
+            model.addAttribute("ratings", ratingService.findAll());
+            return "rating/list";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            return "rating/add";
+        }
     }
 
     @GetMapping("/rating/update/{id}")
@@ -53,8 +60,13 @@ public class RatingController {
         if (result.hasErrors()) {
             return "rating/update";
         }
-        ratingService.update(rating);
-        return "redirect:/rating/list";
+        try {
+            ratingService.update(rating);
+            return "redirect:/rating/list";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            return "rating/update";
+        }
     }
 
     @GetMapping("/rating/delete/{id}")

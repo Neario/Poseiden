@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class TradeController {
@@ -35,9 +37,14 @@ public class TradeController {
         if (result.hasErrors()) {
             return "trade/add";
         }
-        tradeService.save(trade);
-        model.addAttribute("trades", tradeService.findAll());
-        return "trade/list";
+        try {
+            tradeService.save(trade);
+            model.addAttribute("trades", tradeService.findAll());
+            return "trade/list";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            return "trade/add";
+        }
     }
 
     @GetMapping("/trade/update/{id}")
@@ -53,8 +60,13 @@ public class TradeController {
         if (result.hasErrors()) {
             return "trade/update";
         }
-        trade.update(trade);
-        return "redirect:/trade/list";
+        try {
+            trade.update(trade);
+            return "redirect:/trade/list";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            return "trade/update";
+        }
     }
 
     @GetMapping("/trade/delete/{id}")

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class BidListController {
@@ -35,9 +37,13 @@ public class BidListController {
         if (result.hasErrors()) {
             return "bidList/add";
         }
-        bidListService.save(bid);
-        model.addAttribute("bidLists", bidListService.findAll());
-        return "redirect:/bidList/list";
+        try {
+            bidListService.save(bid);
+            return "redirect:/bidList/list";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            return "bidList/add";
+        }
     }
 
     @GetMapping("/bidList/update/{id}")
@@ -53,9 +59,14 @@ public class BidListController {
         if (result.hasErrors()) {
             return "bidList/update";
         }
-        bidListService.update(bidList);
-        model.addAttribute("bidLists", bidListService.findAll());
-        return "redirect:/bidList/list";
+        try {
+            bidListService.update(bidList);
+            model.addAttribute("bidLists", bidListService.findAll());
+            return "redirect:/bidList/list";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            return "bidList/update";
+        }
     }
 
     @GetMapping("/bidList/delete/{id}")

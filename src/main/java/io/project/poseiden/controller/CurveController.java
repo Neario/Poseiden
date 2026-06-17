@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class CurveController {
@@ -35,9 +37,14 @@ public class CurveController {
         if (result.hasErrors()) {
             return "curvePoint/add";
         }
-        curvePointService.save(curvePoint);
-        model.addAttribute("curvePoints", curvePointService.findAll());
-        return "curvePoint/list";
+        try {
+            curvePointService.save(curvePoint);
+            model.addAttribute("curvePoints", curvePointService.findAll());
+            return "curvePoint/list";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            return "curvePoint/add";
+        }
     }
 
     @GetMapping("/curvePoint/update/{id}")
@@ -53,8 +60,14 @@ public class CurveController {
         if (result.hasErrors()) {
             return "curvePoint/update";
         }
-        curvePointService.update(curvePoint);
-        return "redirect:/curvePoint/list";
+        try {
+            curvePointService.update(curvePoint);
+            return "redirect:/curvePoint/list";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            return "curvePoint/update";
+        }
+
     }
 
     @GetMapping("/curvePoint/delete/{id}")
