@@ -2,7 +2,6 @@ package io.project.poseiden.controller;
 
 import io.project.poseiden.model.User;
 import io.project.poseiden.service.CrudService;
-import io.project.poseiden.service.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
