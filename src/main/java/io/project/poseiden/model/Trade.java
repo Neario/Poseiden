@@ -1,6 +1,8 @@
 package io.project.poseiden.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicUpdate;
@@ -16,8 +18,11 @@ public class Trade implements CrudModel<Trade> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotBlank(message = "account is mandatory")
     private String account;
+    @NotBlank(message = "type is mandatory")
     private String type;
+    @NotNull(message = "must not be null")
     private Double buyQuantity;
     private Double sellQuantity;
     private Double buyPrice;
