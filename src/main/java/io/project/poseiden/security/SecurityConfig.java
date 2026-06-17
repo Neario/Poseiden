@@ -13,21 +13,22 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-public class SpringSecurityConfig {
+public class SecurityConfig {
     private final CustomUserDetailsService customUserDetailsService;
     @Bean
-    public SecurityFilterChain springSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain configuration(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
                 .requestMatchers("/css/**").permitAll()
-                .requestMatchers("/login").permitAll()
+                .requestMatchers("/app/login").permitAll()
+                .requestMatchers("/app/error").permitAll()
                 .anyRequest().authenticated()
         ).formLogin(formLogin -> formLogin
-                .loginPage("/login")
+                .loginPage("/app/login")
                 .defaultSuccessUrl("/bidList/list")
                 .permitAll()
         ).logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
+                .logoutUrl("/app/logout")
+                .logoutSuccessUrl("/app/login?logout")
 
         );
         return http.build();
