@@ -12,7 +12,7 @@
             <div class="card-body mx-5">
                 <h5 class="mx-auto my-3 pt-1 pb-2 px-3">Login with your Username and Password</h5>
                 <div class="form-login mt-5">
-                    <form th:action="@{/login}" method="post">
+                    <form th:action="@{/app/login}" method="post">
                         <div th:if="${param.error}">
                             <div class="alert alert-danger text-wrap" role="alert">Invalid username or password</div>
                         </div>
