@@ -36,7 +36,7 @@ public class UserControllerTestIT {
     public void setup() {
         user = new User();
         user.setUsername("Test")
-                .setPassword("Test")
+                .setPassword("Test1234@")
                 .setFullname("Test")
                 .setRole("USER");
 
@@ -68,7 +68,7 @@ public class UserControllerTestIT {
                         .with(csrf())
                         .param("fullname", "fullname")
                         .param("username", "username")
-                        .param("password", "password")
+                        .param("password", "Test1234@")
                         .param("role", "USER"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/user/list"));
@@ -103,7 +103,7 @@ public class UserControllerTestIT {
                         .with(csrf())
                         .param("fullname", "fullname")
                         .param("username", "usernameUpdated")
-                        .param("password", "passwordUpdated")
+                        .param("password", "Test456@")
                         .param("role", "USER"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/user/list"));
@@ -120,6 +120,15 @@ public class UserControllerTestIT {
                         .param("role", "USER"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("user/update"));
+    }
+
+    @Test
+    @WithMockUser(username = "User", roles = "USER")
+    public void shouldRedirectToListWhenUserNotFound() throws Exception {
+        mockMvc.perform(get("/user/update/99"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/list"))
+                .andExpect(model().attributeExists("errors"));
     }
 
     @Test

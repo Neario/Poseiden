@@ -124,6 +124,15 @@ public class RatingControllerTestIT {
 
     @Test
     @WithMockUser(username = "User", roles = "USER")
+    public void shouldRedirectToListWhenRatingNotFound() throws Exception {
+        mockMvc.perform(get("/rating/update/99"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("rating/list"))
+                .andExpect(model().attributeExists("errors"));
+    }
+
+    @Test
+    @WithMockUser(username = "User", roles = "USER")
     public void shouldRedirectRatingWhenDeleteSuccess() throws Exception {
         mockMvc.perform(get("/rating/delete/" + 1).with(csrf()))
                 .andExpect(status().is3xxRedirection())

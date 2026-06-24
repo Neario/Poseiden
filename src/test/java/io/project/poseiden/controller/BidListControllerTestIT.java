@@ -133,6 +133,15 @@ public class BidListControllerTestIT {
 
     @Test
     @WithMockUser(username = "User", roles = "USER")
+    public void shouldRedirectToListWhenBidListNotFound() throws Exception {
+        mockMvc.perform(get("/bidList/update/99"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("bidList/list"))
+            .andExpect(model().attributeExists("errors"));
+    }
+
+    @Test
+    @WithMockUser(username = "User", roles = "USER")
     public void shouldRedirectBidListWhenDeleteSuccess() throws Exception {
         mockMvc.perform(get("/bidList/delete/" + 1).with(csrf()))
                 .andExpect(status().is3xxRedirection())

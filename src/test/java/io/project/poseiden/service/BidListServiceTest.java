@@ -113,7 +113,7 @@ public class BidListServiceTest {
 
         bidListService.save(bidList);
 
-        verify(repository).save(bidList);
+        verify(repository, times(1)).save(bidList);
     }
 
     @Test
@@ -128,7 +128,7 @@ public class BidListServiceTest {
 
         bidListService.update(bidListUpdated);
 
-        verify(repository).save(bidListUpdated);
+        verify(repository, times(1)).save(bidListUpdated);
     }
 
     @Test

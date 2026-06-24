@@ -134,6 +134,15 @@ public class RuleNameControllerTestIT {
 
     @Test
     @WithMockUser(username = "User", roles = "USER")
+    public void shouldRedirectToListWhenRuleNameNotFound() throws Exception {
+        mockMvc.perform(get("/ruleName/update/99"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("ruleName/list"))
+                .andExpect(model().attributeExists("errors"));
+    }
+
+    @Test
+    @WithMockUser(username = "User", roles = "USER")
     public void shouldRedirectRuleNameWhenDeleteSuccess() throws Exception {
         mockMvc.perform(get("/ruleName/delete/" + ruleName.getId()).with(csrf()))
                 .andExpect(status().is3xxRedirection())

@@ -138,6 +138,15 @@ public class TradeControllerTestIT {
 
     @Test
     @WithMockUser(username = "User", roles = "USER")
+    public void shouldRedirectToListWhenTradeNotFound() throws Exception {
+        mockMvc.perform(get("/trade/update/99"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("trade/list"))
+                .andExpect(model().attributeExists("errors"));
+    }
+
+    @Test
+    @WithMockUser(username = "User", roles = "USER")
     public void shouldRedirectTradeWhenDeleteSuccess() throws Exception {
         mockMvc.perform(get("/trade/delete/" + trade.getId()).with(csrf()))
                 .andExpect(status().is3xxRedirection())

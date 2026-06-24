@@ -123,6 +123,15 @@ public class CurvePointControllerTestIT {
 
     @Test
     @WithMockUser(username = "User", roles = "USER")
+    public void shouldRedirectToListWhenCurvePointNotFound() throws Exception {
+        mockMvc.perform(get("/curvePoint/update/99"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("curvePoint/list"))
+                .andExpect(model().attributeExists("errors"));
+    }
+
+    @Test
+    @WithMockUser(username = "User", roles = "USER")
     public void shouldRedirectCurvePointWhenDeleteSuccess() throws Exception {
         mockMvc.perform(get("/curvePoint/delete/" + 1).with(csrf()))
                 .andExpect(status().is3xxRedirection())
