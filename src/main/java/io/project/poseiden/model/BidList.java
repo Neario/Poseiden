@@ -22,7 +22,7 @@ public class BidList implements CrudModel<BidList> {
     private String account;
     @NotBlank(message = "Type is mandatory")
     private String type;
-    @NotNull
+    @NotNull(message = "bidQuantity is mandatory")
     private Double bidQuantity;
     private Double askQuantity;
     private Double bid;

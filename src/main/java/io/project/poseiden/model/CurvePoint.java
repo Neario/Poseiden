@@ -20,7 +20,9 @@ public class CurvePoint implements CrudModel<CurvePoint> {
     @NotNull(message = "must not be null")
     private Long curveId;
     private Timestamp asOfDate;
+    @NotNull(message = "must not be null")
     private Double term;
+    @NotNull(message = "must not be null")
     private Double value;
     private Timestamp creationDate;
 
