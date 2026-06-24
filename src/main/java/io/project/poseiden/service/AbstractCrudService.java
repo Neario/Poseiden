@@ -1,11 +1,9 @@
 package io.project.poseiden.service;
 
-
 import io.project.poseiden.exception.NotFoundException;
 import io.project.poseiden.model.CrudModel;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.http.HttpStatus;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;

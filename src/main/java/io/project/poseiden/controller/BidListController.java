@@ -48,9 +48,15 @@ public class BidListController {
 
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
-        BidList bidList = bidListService.getById(id);
-        model.addAttribute("bidList", bidList);
-        return "bidList/update";
+        try {
+            BidList bidList = bidListService.getById(id);
+            model.addAttribute("bidList", bidList);
+            return "bidList/update";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            model.addAttribute("bidLists", bidListService.findAll());
+            return "bidList/list";
+        }
     }
 
     @PostMapping("/bidList/update/{id}")
@@ -71,7 +77,14 @@ public class BidListController {
 
     @GetMapping("/bidList/delete/{id}")
     public String deleteBid(@PathVariable("id") Long id, Model model) {
-        bidListService.deleteById(id);
-        return "redirect:/bidList/list";
+        try {
+            bidListService.deleteById(id);
+            return "redirect:/bidList/list";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            model.addAttribute("bidLists", bidListService.findAll());
+            return "bidList/list";
+        }
+
     }
 }

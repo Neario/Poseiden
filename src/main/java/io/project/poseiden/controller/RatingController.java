@@ -49,9 +49,16 @@ public class RatingController {
 
     @GetMapping("/rating/update/{id}")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
-        Rating rating = ratingService.getById(id);
-        model.addAttribute("rating", rating);
-        return "rating/update";
+        try {
+            Rating rating = ratingService.getById(id);
+            model.addAttribute("rating", rating);
+            return "rating/update";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            model.addAttribute("ratingPoints", ratingService.findAll());
+            return "rating/list";
+        }
+
     }
 
     @PostMapping("/rating/update/{id}")
@@ -71,7 +78,13 @@ public class RatingController {
 
     @GetMapping("/rating/delete/{id}")
     public String deleteRating(@PathVariable("id") Long id, Model model) {
-        ratingService.deleteById(id);
-        return "redirect:/rating/list";
+        try {
+            ratingService.deleteById(id);
+            return "redirect:/rating/list";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            model.addAttribute("ratingPoints", ratingService.findAll());
+            return "rating/list";
+        }
     }
 }

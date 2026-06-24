@@ -49,9 +49,16 @@ public class TradeController {
 
     @GetMapping("/trade/update/{id}")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
-        Trade trade = tradeService.getById(id);
-        model.addAttribute("trade", trade);
-        return "trade/update";
+        try {
+            Trade trade = tradeService.getById(id);
+            model.addAttribute("trade", trade);
+            return "trade/update";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            model.addAttribute("trade", tradeService.findAll());
+            return "trade/list";
+        }
+
     }
 
     @PostMapping("/trade/update/{id}")
@@ -71,7 +78,13 @@ public class TradeController {
 
     @GetMapping("/trade/delete/{id}")
     public String deleteTrade(@PathVariable("id") Long id, Model model) {
-        tradeService.deleteById(id);
-        return "redirect:/trade/list";
+        try {
+            tradeService.deleteById(id);
+            return "redirect:/trade/list";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            model.addAttribute("trade", tradeService.findAll());
+            return "trade/list";
+        }
     }
 }

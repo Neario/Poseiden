@@ -1,5 +1,6 @@
 package io.project.poseiden.controller;
 
+import io.project.poseiden.model.BidList;
 import io.project.poseiden.model.CurvePoint;
 import io.project.poseiden.service.interfaces.CurvePointService;
 import jakarta.validation.Valid;
@@ -49,9 +50,16 @@ public class CurveController {
 
     @GetMapping("/curvePoint/update/{id}")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
-        CurvePoint curvePoint = curvePointService.getById(id);
-        model.addAttribute("curvePoint", curvePoint);
-        return "curvePoint/update";
+        try {
+            CurvePoint curvePoint = curvePointService.getById(id);
+            model.addAttribute("curvePoint", curvePoint);
+            return "curvePoint/update";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            model.addAttribute("curvePoints", curvePointService.findAll());
+            return "curvePoint/list";
+        }
+
     }
 
     @PostMapping("/curvePoint/update/{id}")
@@ -72,7 +80,13 @@ public class CurveController {
 
     @GetMapping("/curvePoint/delete/{id}")
     public String deleteCurve(@PathVariable("id") Long id, Model model) {
-        curvePointService.deleteById(id);
-        return "redirect:/curvePoint/list";
+        try {
+            curvePointService.deleteById(id);
+            return "redirect:/curvePoint/list";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            model.addAttribute("curvePoints", curvePointService.findAll());
+            return "curvePoint/list";
+        }
     }
 }

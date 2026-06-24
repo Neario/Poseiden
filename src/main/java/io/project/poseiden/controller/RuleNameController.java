@@ -49,9 +49,15 @@ public class RuleNameController {
 
     @GetMapping("/ruleName/update/{id}")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
-        RuleName ruleName = ruleNameService.getById(id);
-        model.addAttribute("ruleName", ruleName);
-        return "ruleName/update";
+        try {
+            RuleName ruleName = ruleNameService.getById(id);
+            model.addAttribute("ruleName", ruleName);
+            return "ruleName/update";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            model.addAttribute("ruleNames", ruleNameService.findAll());
+            return "ruleName/list";
+        }
     }
 
     @PostMapping("/ruleName/update/{id}")
@@ -71,7 +77,13 @@ public class RuleNameController {
 
     @GetMapping("/ruleName/delete/{id}")
     public String deleteRuleName(@PathVariable("id") Long id, Model model) {
-        ruleNameService.deleteById(id);
-        return "redirect:/ruleName/list";
+        try {
+            ruleNameService.deleteById(id);
+            return "redirect:/ruleName/list";
+        } catch (Exception exception) {
+            model.addAttribute("errors", List.of(exception.getMessage()));
+            model.addAttribute("ruleName", ruleNameService.findAll());
+            return "ruleName/list";
+        }
     }
 }
