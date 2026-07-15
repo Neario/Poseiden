@@ -138,4 +138,14 @@ public class UserControllerTestIT {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/user/list"));
     }
+
+    @Test
+    @WithMockUser(username = "User", roles = "USER")
+    public void shouldRedirectToListWhenDeleteUserNotFound() throws Exception {
+        mockMvc.perform(get("/user/delete/99")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/list"))
+                .andExpect(model().attributeExists("errors"));
+    }
 }

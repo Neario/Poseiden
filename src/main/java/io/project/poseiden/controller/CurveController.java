@@ -1,6 +1,5 @@
 package io.project.poseiden.controller;
 
-import io.project.poseiden.model.BidList;
 import io.project.poseiden.model.CurvePoint;
 import io.project.poseiden.service.interfaces.CurvePointService;
 import jakarta.validation.Valid;

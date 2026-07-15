@@ -42,6 +42,9 @@ public class AbstractCrudService<MODEL extends CrudModel> implements CrudService
     }
 
     public void deleteById(Long id) {
+        if (!repository.existsById(id)) {
+            throw new NotFoundException(getGenericName(), id);
+        }
         repository.deleteById(id);
     }
 

@@ -91,7 +91,8 @@ public class CurvePointControllerTestIT {
     @Test
     @WithMockUser(username = "User", roles = "USER")
     public void shouldDisplayUpdateViewWithCurvePoint() throws Exception {
-        mockMvc.perform(get("/curvePoint/update/" + curvePoint.getId()).with(csrf()))
+        mockMvc.perform(get("/curvePoint/update/" + curvePoint.getId())
+                    .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("curvePoint/update"))
                 .andExpect(model().attributeExists("curvePoint"));
@@ -112,7 +113,7 @@ public class CurvePointControllerTestIT {
     @Test
     @WithMockUser(username = "User", roles = "USER")
     public void shouldReturnUpdateViewWhenInvalidCurvePoint() throws Exception {
-        mockMvc.perform(post("/curvePoint/update/" + 1)
+        mockMvc.perform(post("/curvePoint/update/" + curvePoint.getId())
                 .with(csrf())
                 .param("curveId", "updateAccount")
                 .param("term", "")
@@ -133,8 +134,18 @@ public class CurvePointControllerTestIT {
     @Test
     @WithMockUser(username = "User", roles = "USER")
     public void shouldRedirectCurvePointWhenDeleteSuccess() throws Exception {
-        mockMvc.perform(get("/curvePoint/delete/" + 1).with(csrf()))
+        mockMvc.perform(get("/curvePoint/delete/" + curvePoint.getId()).with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/curvePoint/list"));
+    }
+
+    @Test
+    @WithMockUser(username = "User", roles = "USER")
+    public void shouldRedirectToListWhenDeleteCurvePointNotFound() throws Exception {
+        mockMvc.perform(get("/curvePoint/delete/99")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("curvePoint/list"))
+                .andExpect(model().attributeExists("errors"));
     }
 }

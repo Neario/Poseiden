@@ -134,6 +134,8 @@ public class CurvePointServiceTest {
 
     @Test
     public void shouldDeleteCurvePoint() {
+        when(repository.existsById(1L)).thenReturn(true);
+
         curvePointService.deleteById(1L);
 
         verify(repository).deleteById(1L);

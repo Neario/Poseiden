@@ -133,6 +133,8 @@ public class RatingServiceTest {
 
     @Test
     public void shouldDeleteRating() {
+        when(repository.existsById(1L)).thenReturn(true);
+
         ratingService.deleteById(1L);
 
         verify(repository).deleteById(1L);

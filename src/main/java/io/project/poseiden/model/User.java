@@ -19,8 +19,6 @@ public class User implements CrudModel<User> {
     @NotBlank(message = "Username is mandatory")
     private String username;
     @NotBlank(message = "Password is mandatory")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "le mot de " +
-            "passe doit contenir 8 caractère , 1 majuscule , un symbole et un chiffre")
     private String password;
     @NotBlank(message = "FullName is mandatory")
     private String fullname;

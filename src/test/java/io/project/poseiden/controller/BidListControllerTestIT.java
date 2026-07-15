@@ -101,7 +101,8 @@ public class BidListControllerTestIT {
     @Test
     @WithMockUser(username = "User", roles = "USER")
     public void shouldDisplayUpdateViewWithBidList() throws Exception {
-        mockMvc.perform(get("/bidList/update/" + 1).with(csrf()))
+        mockMvc.perform(get("/bidList/update/" + bidList.getId())
+                    .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bidList/update"))
                 .andExpect(model().attributeExists("bidList"));
@@ -143,8 +144,19 @@ public class BidListControllerTestIT {
     @Test
     @WithMockUser(username = "User", roles = "USER")
     public void shouldRedirectBidListWhenDeleteSuccess() throws Exception {
-        mockMvc.perform(get("/bidList/delete/" + 1).with(csrf()))
+        mockMvc.perform(get("/bidList/delete/" + bidList.getId())
+                    .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/bidList/list"));
+    }
+
+    @Test
+    @WithMockUser(username = "User", roles = "USER")
+    public void shouldRedirectToListWhenDeleteBidListNotFound() throws Exception {
+        mockMvc.perform(get("/bidList/delete/99")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("bidList/list"))
+                .andExpect(model().attributeExists("errors"));
     }
 }

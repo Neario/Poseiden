@@ -149,6 +149,8 @@ public class TradeServiceTest {
 
     @Test
     public void shouldDeleteTrade() {
+        when(repository.existsById(1L)).thenReturn(true);
+
         tradeService.deleteById(1L);
 
         verify(repository).deleteById(1L);

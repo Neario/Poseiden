@@ -96,7 +96,8 @@ public class RuleNameControllerTestIT {
     @Test
     @WithMockUser(username = "User", roles = "USER")
     public void shouldDisplayUpdateViewWithRuleName() throws Exception {
-        mockMvc.perform(get("/ruleName/update/" + ruleName.getId()).with(csrf()))
+        mockMvc.perform(get("/ruleName/update/" + ruleName.getId())
+                    .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("ruleName/update"))
                 .andExpect(model().attributeExists("ruleName"));
@@ -147,5 +148,15 @@ public class RuleNameControllerTestIT {
         mockMvc.perform(get("/ruleName/delete/" + ruleName.getId()).with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/ruleName/list"));
+    }
+
+    @Test
+    @WithMockUser(username = "User", roles = "USER")
+    public void shouldRedirectToListWhenDeleteRuleNameNotFound() throws Exception {
+        mockMvc.perform(get("/ruleName/delete/99")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("ruleName/list"))
+                .andExpect(model().attributeExists("errors"));
     }
 }

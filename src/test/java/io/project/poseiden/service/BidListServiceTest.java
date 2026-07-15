@@ -144,6 +144,8 @@ public class BidListServiceTest {
 
     @Test
     public void shouldDeleteBidList() {
+        when(repository.existsById(1L)).thenReturn(true);
+
         bidListService.deleteById(1L);
 
         verify(repository).deleteById(1L);

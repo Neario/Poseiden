@@ -32,7 +32,7 @@ public class UserServiceTest {
         user = new User();
         user.setId(1L)
                 .setUsername("Test")
-                .setPassword("Test")
+                .setPassword("Testpassword1!")
                 .setFullname("Test")
                 .setRole("USER");
     }
@@ -98,6 +98,7 @@ public class UserServiceTest {
     @Test
     public void shouldRegisterUser() {
         User user = new User();
+        user.setPassword("Testpassword1!");
 
         userService.save(user);
 
@@ -129,6 +130,8 @@ public class UserServiceTest {
 
     @Test
     public void shouldDeleteUser() {
+        when(repository.existsById(1L)).thenReturn(true);
+
         userService.deleteById(1L);
 
         verify(repository).deleteById(1L);

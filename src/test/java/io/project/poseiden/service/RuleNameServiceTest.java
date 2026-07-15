@@ -134,6 +134,8 @@ public class RuleNameServiceTest {
 
     @Test
     public void shouldDeleteRuleName() {
+        when(repository.existsById(1L)).thenReturn(true);
+
         ruleNameService.deleteById(1L);
 
         verify(repository).deleteById(1L);

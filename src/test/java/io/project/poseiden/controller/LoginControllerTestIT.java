@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -72,5 +72,22 @@ public class LoginControllerTestIT {
                         .param("password", "password"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/app/login?error"));
+    }
+
+    @Test
+    @WithMockUser(username = "Admin", roles = "ADMIN")
+    void shouldDisplayAllUserArticles() throws Exception {
+        mockMvc.perform(get("/app/secure/article-details"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/list"))
+                .andExpect(model().attributeExists("users"));
+    }
+
+    @Test
+    void shouldDisplayErrorPage() throws Exception {
+        mockMvc.perform(get("/app/error"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("403"))
+                .andExpect(model().attribute("errorMsg", "You are not authorized for the requested data."));
     }
 }

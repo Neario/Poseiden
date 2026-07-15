@@ -106,7 +106,8 @@ public class TradeControllerTestIT {
     @Test
     @WithMockUser(username = "User", roles = "USER")
     public void shouldDisplayUpdateViewWithTrade() throws Exception {
-        mockMvc.perform(get("/trade/update/" + trade.getId()).with(csrf()))
+        mockMvc.perform(get("/trade/update/" + trade.getId())
+                    .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("trade/update"))
                 .andExpect(model().attributeExists("trade"));
@@ -148,8 +149,19 @@ public class TradeControllerTestIT {
     @Test
     @WithMockUser(username = "User", roles = "USER")
     public void shouldRedirectTradeWhenDeleteSuccess() throws Exception {
-        mockMvc.perform(get("/trade/delete/" + trade.getId()).with(csrf()))
+        mockMvc.perform(get("/trade/delete/" + trade.getId())
+                    .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/trade/list"));
+    }
+
+    @Test
+    @WithMockUser(username = "User", roles = "USER")
+    public void shouldRedirectToListWhenDeleteTradeNotFound() throws Exception {
+        mockMvc.perform(get("/trade/delete/99")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("trade/list"))
+                .andExpect(model().attributeExists("errors"));
     }
 }

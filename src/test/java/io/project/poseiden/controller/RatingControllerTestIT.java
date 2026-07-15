@@ -112,7 +112,7 @@ public class RatingControllerTestIT {
     @Test
     @WithMockUser(username = "User", roles = "USER")
     public void shouldReturnUpdateViewWhenInvalidRating() throws Exception {
-        mockMvc.perform(post("/rating/update/" + 2)
+        mockMvc.perform(post("/rating/update/" + rating.getId())
                 .with(csrf())
                         .param("moodysRating", "moodysRating")
                         .param("sandPRating", "sandPRatingUpdate")
@@ -134,8 +134,18 @@ public class RatingControllerTestIT {
     @Test
     @WithMockUser(username = "User", roles = "USER")
     public void shouldRedirectRatingWhenDeleteSuccess() throws Exception {
-        mockMvc.perform(get("/rating/delete/" + 1).with(csrf()))
+        mockMvc.perform(get("/rating/delete/" + rating.getId()).with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/rating/list"));
+    }
+
+    @Test
+    @WithMockUser(username = "User", roles = "USER")
+    public void shouldRedirectToListWhenDeleteRatingNotFound() throws Exception {
+        mockMvc.perform(get("/rating/delete/99")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("rating/list"))
+                .andExpect(model().attributeExists("errors"));
     }
 }
