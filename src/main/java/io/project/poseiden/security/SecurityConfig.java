@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
         ).formLogin(formLogin -> formLogin
                 .loginPage("/app/login")
-                .defaultSuccessUrl("/bidList/list")
+                .defaultSuccessUrl("/bidList/list", true)
                 .permitAll()
         ).logout(logout -> logout
                 .logoutUrl("/app-logout")

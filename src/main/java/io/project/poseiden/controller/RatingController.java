@@ -14,12 +14,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+/**
+ * Controller for web requests link to {@link Rating} entities.
+ * <p>
+ * endpoints : create, update, and delete for Rating.
+ * business logic to {@link RatingService}.
+ */
 @Controller
 @RequiredArgsConstructor
 public class RatingController {
 
     private final RatingService ratingService;
 
+    /**
+     * Show the list of all Rating entries.
+     *
+     * @param model pass data to the view
+     * @return the view name displaying the list of Rating
+     */
     @RequestMapping("/rating/list")
     public String home(Model model)
     {
@@ -27,11 +39,25 @@ public class RatingController {
         return "rating/list";
     }
 
+    /**
+     * Show the form used to create a new Rating.
+     *
+     * @param rating an empty {@link Rating} link to the form
+     * @return the view name displaying the creation form
+     */
     @GetMapping("/rating/add")
     public String addRatingForm(Rating rating) {
         return "rating/add";
     }
 
+    /**
+     * Validates and saves a new Rating entry submitted from the creation form.
+     * <p>
+     * @param rating the Rating entry to validate and save
+     * @param result the result of the validation with any errors
+     * @param model the model used to pass data to the view
+     * @return a redirect to the Rating list page on success, or the form view on failure
+     */
     @PostMapping("/rating/validate")
     public String validate(@Valid Rating rating, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -47,6 +73,13 @@ public class RatingController {
         }
     }
 
+    /**
+     * Show the form used to update an existing Rating entry.
+     * <p>
+     * @param id identifier of the Rating entry to update
+     * @param model the model used to pass data to the view
+     * @return the update form, or the view list of Rating if the entry is not found
+     */
     @GetMapping("/rating/update/{id}")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         try {
@@ -61,6 +94,15 @@ public class RatingController {
 
     }
 
+    /**
+     * Validates and applies updates to an existing Rating.
+     * <p>
+     * @param id identifier of the Rating entry to update
+     * @param rating the Rating entry with the updated data
+     * @param result the result of the validation, with any errors
+     * @param model the model used to pass data to the view
+     * @return a redirect to the Rating list page on success, or the update form view on failure
+     */
     @PostMapping("/rating/update/{id}")
     public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating,
                                BindingResult result, Model model) {
@@ -76,6 +118,13 @@ public class RatingController {
         }
     }
 
+    /**
+     * Deletes an existing Rating.
+     * <p>
+     * @param id identifier of the Rating entry to delete
+     * @param model the model used to pass data to the view
+     * @return a redirect to the Rating list page on success, or the list view on failure
+     */
     @GetMapping("/rating/delete/{id}")
     public String deleteRating(@PathVariable("id") Long id, Model model) {
         try {
